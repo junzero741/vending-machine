@@ -1,0 +1,21 @@
+{
+  "name": "fe-w7-vm",
+  "version": "1.0.0",
+  "description": "## 구조 ```json ```",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ppamppamman/fe-w7-vm.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ppamppamman/fe-w7-vm/issues"
+  },
+  "homepage": "https://github.com/ppamppamman/fe-w7-vm#readme",
+  "type": "module"
+}
