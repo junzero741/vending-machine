@@ -1,0 +1,6 @@
+class WalletContainer {
+  constructor({ $target, }) {
+    
+  }
+
+}
