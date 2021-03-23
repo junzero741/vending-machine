@@ -17,3 +17,7 @@ export const currency = {
 };
 
 export const initNum = 0;
+
+export const defaultValue = 100000;
+
+export const getRandom = (value) => parseInt(Math.random().toFixed(2) * value + 1000);

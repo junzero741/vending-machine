@@ -12,4 +12,8 @@ export default class Product {
   setCount(newCount) {
     this.count = newCount;
   }
+
+  setSelf(self) {
+    this.self = self;
+  }
 }

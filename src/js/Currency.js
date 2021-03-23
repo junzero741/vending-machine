@@ -1,5 +1,18 @@
 export default class Currency {
-  constructor() {
-    this.units = [10, 50, 100, 500, 1000, 5000, 10000];
+  constructor(value = 0, count = 0) {
+    this.value = value;
+    this.count = count;
+  }
+  isEmpty() {
+    return this.count === 0;
+  }
+  setCount(count) {
+    this.count += count;
+  }
+  // addCount(count) {
+  //   this.count += count;
+  // }
+  setSelf(self) {
+    this.self = self;
   }
 }
