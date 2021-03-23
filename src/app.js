@@ -1,4 +1,4 @@
-import WalletContainer from "./containers/WalletContainer.js";
+import WalletContainer from "./components/WalletContainer.js.js";
 
 class App {
   constructor({ $target }) {
@@ -16,10 +16,10 @@ class App {
         "50": [],
       },
 
-      // vendingMachineComputer: {
-      // currentAmount: []
-      // actionDisplay: []
-      // },
+      process: {
+        $target: this.$target,
+        userInputCash: []
+      },
 
       // goods: {
       //  coke: [],
