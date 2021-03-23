@@ -4,9 +4,11 @@
   "private": true,
   "scripts": {
     "start": "nodemon ./bin/www",
-    "build": "npx webpack -w"
+    "build": "npx webpack -w",
+    "build:css" : "tailwindcss build src/tailwindImport.css -o src/tailwind.css"
   },
   "dependencies": {
+    "autoprefixer": "^10.2.5",
     "cookie-parser": "~1.4.4",
     "core-js": "^3.9.1",
     "debug": "~2.6.9",
@@ -15,7 +17,8 @@
     "http-errors": "~1.6.3",
     "morgan": "~1.9.1",
     "nodemon": "^2.0.7",
-    "pug": "2.0.0-beta11"
+    "pug": "2.0.0-beta11",
+    "tailwindcss": "^2.0.4"
   },
   "devDependencies": {
     "@babel/cli": "^7.13.10",
