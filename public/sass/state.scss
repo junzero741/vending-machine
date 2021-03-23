@@ -1,0 +1,30 @@
+.state-view {
+  text-align: center;
+  padding: 40px 20px;
+  width: 400px;
+  border: 5px solid black;
+  height: 900px;
+  background-color: #ffd490;
+
+  &__price {
+    height: 60px;
+    border: 2px solid black;
+    margin-bottom: 60px;
+    background-color: white;
+  }
+  &__btn {
+    padding: 0 155px;
+    height: 60px;
+    border: 2px solid black;
+    margin-bottom: 60px;
+    font-size: 20px;
+    background-color: ec4037;
+    color: white;
+    border-radius: 10px;
+  }
+  &__state {
+    background-color: white;
+    height: 500px;
+    border: 2px solid black;
+  }
+}

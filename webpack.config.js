@@ -1,23 +1,22 @@
 const path = require("path");
-const webpack = require("webpack");
 
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 module.exports = {
   mode: "development",
-  entry: ["@babel/polyfill", "./public/src/main.js", "./public/sass/main.scss"],
+  entry: ["@babel/polyfill", "./public/src/main.js"],
   devtool: "inline-source-map",
   output: {
-    filename: "bundle.js",
+    filename: "[name].[hash].js",
     path: path.resolve(__dirname, "dist"),
-    publicPath: "http://localhost:3000/dist",
+    publicPath: "http://localhost:3000",
   },
   module: {
     rules: [
       {
         test: /\.js$/,
         exclude: /node_modules/,
-        use: {
-          loader: "babel-loader",
-        },
+        use: "babel-loader",
       },
       {
         test: /\.scss$/,
@@ -25,5 +24,18 @@ module.exports = {
         exclude: /node_modules/,
       },
     ],
+  },
+  plugins: [
+    new HtmlWebpackPlugin({
+      template: "./public/index.html",
+    }),
+    new CleanWebpackPlugin(),
+  ],
+  devServer: {
+    contentBase: path.resolve(__dirname + "/dist"),
+    index: "index.html",
+    port: 3000,
+    writeToDisk: true,
+    hot: true,
   },
 };
