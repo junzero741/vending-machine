@@ -1,32 +1,41 @@
-import WalletContainer from "./containers/WalletContainer.js";
+import WalletContainer from "./components/Wallet/WalletContainer.js";
+import GoodsContainer from "./components/Goods/GoodsContainer.js";
+import ProcessContainer from "./components/process/processContainer.js";
+
+import { Coke, PineappleFanta, Cider } from "./util/objects/goods.js";
 
 class App {
   constructor({ $target }) {
     this.$target = $target;
 
-    // containers
+    // components
     this.wallet = null;
+    this.goods = null;
+    this.process = null;
 
-    this.goods = {}
-
-    // root state
+    // root state 
+    // 향후 모델로 옮겨집니다.
     this.state = {
       wallet: {
         "10": [],
         "50": [],
       },
 
-      // vendingMachineComputer: {
-      // currentAmount: []
-      // actionDisplay: []
-      // },
+      goods: {
+        coke: Array(10).fill(new Coke()),
+        cider: Array(10).fill(new Cider()),
+        pineappleFanta: Array(10).fill(new PineappleFanta()),
+      },
 
-      // goods: {
-      //  coke: [],
-      //  cider: [],
-      //  pineapple_fanta: []
-      // }
+      process: {
+        $target: this.$target,
+        type: "cash",
+        method: "put",
+        // item : initial setting cash
+      },
+
     }
+    this.setState({});
   }
   setState({ type, method, value }) { // destructured value is new state
     switch (type) {
@@ -71,24 +80,40 @@ class App {
       default:
         break;
     }
-    this.render() // 상태가 바뀜, 리렌더
+    // 상태가 변화 했으므로 리렌더
+    this.render();
   }
 
-  onChangeWallet({ method, value }) {
+  handleChangeWallet({ method, value }) {
     const state = {
       type: "wallet",
       method: method,
       value: value
     };
     this.setState(state);
-
   }
 
+  // handleChangeGoods({ method, value }) {}
+
   render() {
+    
     this.wallet = new WalletContainer({
       $target: this.$target,
-      onChangeWallet: this.onChangeWallet.bind(this),
+      handleChangeWallet: this.handleChangeWallet.bind(this),
     });
+
+    this.goods = new GoodsContainer({
+      $target: this.$target,
+      goods: this.state.goods,
+      handleChangeGoods: this.handleChangeGoods.bind(this),
+    })
+
+    this.process = new ProcessContainer({
+      $target: this.$target,
+      type: this.state.process.type,
+      method: this.state.process.method,
+      // item : this.state.process.item
+    })
   }
 }
 
