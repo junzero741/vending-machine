@@ -1,4 +1,5 @@
-import WalletContainer from "./containers/WalletContainer.js";
+import WalletContainer from "./components/Wallet/WalletContainer.js";
+import GoodsContainer from "./components/Goods/GoodsContainer.js";
 
 class App {
   constructor({$target}) {
@@ -19,12 +20,13 @@ class App {
         // actionDisplay: []
       // },
       
-      // goods: {
-      //  coke: [],
-      //  cider: [],
-      //  pineapple_fanta: []
-      // }
+      goods: {
+       coke: ["coke", "coke", "coke"],
+       cider: ["cider", "cider", "cider"],
+       fanta: ["fanta", "fanta", "fanta"],
+      }
     }
+    this.setState({});
   }
 
   setState({type, method, value}) { // destructured value is new state
@@ -65,21 +67,30 @@ class App {
     this.render() // 상태가 바뀜, 리렌더
   }
   
-  onChangeWallet({method, value}) {
+  handleChangeWallet({method, value}) {
     const state = {
       type: "wallet",
       method: method,
       value: value
     };
     this.setState(state);
-
   }
   
+  handleChangeGoods({method, value}) {
+
+  }
+
   render() {
     this.wallet = new WalletContainer({
       $target: this.$target,
-      onChangeWallet: this.onChangeWallet.bind(this),
+      handleChangeWallet: this.handleChangeWallet.bind(this),
     });
+
+    this.goods = new GoodsContainer({
+      $target: this.$target,
+      goods: this.state.goods,
+      handleChangeGoods: this.handleChangeGoods.bind(this),
+    })
   }
 }
 
