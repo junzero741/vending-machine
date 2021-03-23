@@ -1,0 +1,84 @@
+body
+  background-color: #b2dfdb
+  section
+    display: flex
+    flex-direction: column
+    border: 1px solid
+
+
+.VM
+  margin: 3rem
+  header
+    display: flex
+    div
+      margin: 1rem
+      text-align: center
+      font-weight: 700
+    div:nth-child(1)
+      flex-grow: 2
+    div:nth-child(2)
+      flex-grow: 2
+    div:nth-child(3)
+      flex-grow: 1
+  main
+    display: flex
+    .section__products
+      width: 40%
+      display: grid
+      grid-template-columns: 1fr 1fr 1fr 1fr
+      padding: 1rem
+      
+      .select
+        border: 1px solid red
+      div
+        text-align: center
+        border: 1px solid
+        display: flex
+        flex-direction: column
+        margin: 0.7rem 0.2rem
+        padding: 0.7rem 0.4rem
+        justify-content: space-around
+        span
+
+  
+
+
+    .section__controller
+      width: 40%
+      align-items: center
+      justify-content: space-around
+      .controller__total
+
+        width: 80%
+        height: 15%
+        background-color: white
+      .controller__log
+        width: 80%
+        height: 54%
+        background-color: white
+
+    .section__wallet
+      width: 20%
+      ul
+        display: flex
+        flex-direction: column
+        align-items: center
+        li
+          display: flex
+          width: 100%
+          div
+            border: 1px solid
+            text-align: center
+            margin: 0.6rem
+            border-radius: 5px
+            background-color: #fcd1d1
+            padding: 0.3rem 0
+          div:nth-child(1)
+            width: 50%
+            
+          
+          div:nth-child(2)
+            width: 28%
+            
+
+
