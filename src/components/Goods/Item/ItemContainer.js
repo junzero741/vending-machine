@@ -40,8 +40,7 @@ class ItemContainer {
 
   isSelected(value) {
     console.log("isSelected value", value);
-    // 옵저버블 이벤트로 간다.
-    // dispatch()
+    // 옵저버블의 dispatch() 이벤트로 향후 갈 것이다.
   }
 
   render() {
