@@ -1,20 +1,19 @@
 {
   "name": "fe-w7-vm",
   "version": "1.0.0",
-  "description": "----- ## ***Frontend*** - [ ] Bootstrap 설치 - [ ] UI 만들기",
-  "main": "index.js",
+  "description": "Dino 웹 자판기",
+  "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "babel src/js -w -d dist/js",
     "start": "webpack -w | nodemon app.js",
-    "start:app": "nodemon app.js"
+    "start:app": "nodemon app.js",
+    "build:webpack": "webpack -w"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/17-sss/fe-w7-vm.git"
   },
-  "keywords": [],
-  "author": "",
+  "author": "Dino (Dico & Rano)",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/17-sss/fe-w7-vm/issues"

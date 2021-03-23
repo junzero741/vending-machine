@@ -1,0 +1,31 @@
+.product-container {
+    display: grid;
+    border: none;
+    grid-template-columns: repeat(4, 1fr);
+}
+
+.product-item-container {
+    // border: 1px solid #555;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    width: 250px;
+    background-color: #fff;
+
+    .product-item-img-container {
+        height: 230px;
+    }
+
+    button {
+        display: block;
+        color: #fff;
+        background-color: #9e9700;
+        height: 40px;
+        border: none;
+        border-radius: 5px;
+    }
+}
+
+.item-price {
+    font-size: 2em;
+    color: #9e9700;
+}

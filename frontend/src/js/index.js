@@ -1,4 +1,17 @@
-import { _ } from './util.js';
+import ProductModel from "./Product/ProductModel.js";
 
-const body = _.$('body');
-console.log("body:", body);
+const REFERENCE = {
+    product: {        
+        productWrapSelector: '#productWrapper',
+    },
+    
+    progress: {
+        progressWrapSelector: '',
+    },
+
+    wallet: {
+        walletWrapSelector: '',    
+    },
+};
+
+new ProductModel(REFERENCE.product).init();

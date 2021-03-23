@@ -4,7 +4,47 @@
         <title><%= title %></title>
         <%- include('./partial/vendors.html') %>
     </head>
-    <body>
-        <%= title %>
+    <body class="body">
+
+        <div class="container py-3">
+            <div class="">
+                <div class="text-center">
+                    <!-- <p class="h6">상품화면</p> -->
+                    <ul class="product-container my-2" id="productWrapper">
+                    </ul>
+                </div>
+                <div class="text-center border">
+                    <div class="progress-container my-3">
+                        <div class="progress-current-value my-4 w-75  m-auto">500원</div>
+                        <button class="btn btn-outline-info px-3 my-4 w-75">반환</button>
+                        <div class="progress-current-status my-4 w-75 m-auto">
+                            <span>500원이 투입됐음</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-center border">
+                    <div class="wallet-cotainer my-3">
+                        <div class="wallet-grid m-auto">
+                            <button class="item btn-outline-success">10원</button>
+                            <div class="item">1개</div>
+                            <button class="item btn-outline-success">50원</button>
+                            <div class="item">1개</div>
+                            <button class="item btn-outline-success">100원</button>
+                            <div class="item">1개</div>
+                            <button class="item btn-outline-success">500원</button>
+                            <div class="item">1개</div>
+                            <button class="item btn-outline-success">1000원</button>
+                            <div class="item">1개</div>
+                            <button class="item btn-outline-success">5000원</button>
+                            <div class="item">1개</div>
+                            <button class="item btn-outline-success">10000원</button>
+                            <div class="item">1개</div>
+                        </div>
+                        <div class="wallet-total m-auto">23,550원</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </body>
 </html>

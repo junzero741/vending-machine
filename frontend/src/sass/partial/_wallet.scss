@@ -1,0 +1,24 @@
+.wallet-grid {
+    width: 90%;
+    display: grid;
+    grid-template-rows: repeat(7, 50px); //50px높이의 행을 7개 만든다.
+    grid-template-columns: repeat(
+        2,
+        1fr
+    ); //1fraction의 비율로 5개의 칸을 만든다.
+    //넘치는 암시적 행의 높이가 똑같이 100px이 되게 해준다.
+    grid-auto-rows: 100px;
+    .item {
+        border: 1px solid #555;
+        border-radius: 5px;
+        margin: 10px;
+    }
+}
+
+.wallet-total {
+    border: 1px solid #555;
+    height: 45px;
+    width: 85%;
+    border-radius: 5px;
+    text-align: center;
+}

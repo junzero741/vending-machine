@@ -1,0 +1,145 @@
+[
+    {
+        "name": "아메리카노",
+        "price": 1800,
+        "imgurl": "https://www.banapresso.com/from_open_storage?ws=fprocess&file=banapresso/menu/img_87ffe0eb7656.png"
+    },
+
+    {
+        "name": "카푸치노",
+        "price": 2500,
+        "imgurl": "https://www.banapresso.com/from_open_storage?ws=fprocess&file=banapresso/menu/img_51b71bd89112.png"
+    },
+
+    {
+        "name": "카페라떼",
+        "price": 3000,
+        "imgurl": "https://www.banapresso.com/from_open_storage?ws=fprocess&file=banapresso/menu/img_8c377bd81e61.png"
+    },
+
+    {
+        "name": "카페모카",
+        "price": 4500,
+        "imgurl": "https://www.banapresso.com/from_open_storage?ws=fprocess&file=banapresso/menu/img_96595e403e75.png"
+    },
+
+    {
+        "name": "카라멜마끼야또",
+        "price": 4000,
+        "imgurl": "https://www.banapresso.com/from_open_storage?ws=fprocess&file=banapresso/menu/img_ce79e98ad675.png"
+    },
+
+    {
+        "name": "에스프레소",
+        "price": 1000,
+        "imgurl": "https://www.banapresso.com/img/items/Espresso.png"
+    },
+
+    {
+        "name": "흑임자크리미라떼",
+        "price": 4200,
+        "imgurl": "https://www.banapresso.com/from_open_storage?ws=fprocess&file=banapresso/menu/img_13409bdca66c.png"
+    },
+
+    {
+        "name": "민트매니아",
+        "price": 5000,
+        "imgurl": "https://www.banapresso.com/from_open_storage?ws=fprocess&file=banapresso/menu/img_b8b0a2699889.png"
+    },
+
+    {
+        "name": "초코매니아",
+        "price": 4500,
+        "imgurl": "https://www.banapresso.com/from_open_storage?ws=fprocess&file=banapresso/menu/img_f3f59bc2fb53.png"
+    },
+
+    {
+        "name": "치즈케익매니아",
+        "price": 4500,
+        "imgurl": "https://www.banapresso.com/from_open_storage?ws=fprocess&file=banapresso/menu/img_e203a246d3c2.png"
+    },
+
+    {
+        "name": "흑당버블티",
+        "price": 4700,
+        "imgurl": "https://www.banapresso.com/from_open_storage?ws=fprocess&file=banapresso/menu/img_89cbe2803fa6.png"
+    },
+
+    {
+        "name": "리얼바닐라",
+        "price": 3000,
+        "imgurl": "https://www.banapresso.com/from_open_storage?ws=fprocess&file=banapresso/menu/img_600c98219db3.png"
+    },
+
+    {
+        "name": "민트초코",
+        "price": 4100,
+        "imgurl": "https://www.banapresso.com/from_open_storage?ws=fprocess&file=banapresso/menu/img_6fb188f04d67.png"
+    },
+
+    {
+        "name": "홍시라떼",
+        "price": 4300,
+        "imgurl": "https://www.banapresso.com/from_open_storage?ws=fprocess&file=banapresso/menu/img_533c9e27ad61.png"
+    },
+
+    {
+        "name": "달고나라떼",
+        "price": 3900,
+        "imgurl": "https://www.banapresso.com/from_open_storage?ws=fprocess&file=banapresso/menu/img_d083dde1207c.png"
+    },
+
+    {
+        "name": "패션후르츠크러쉬",
+        "price": 3700,
+        "imgurl": "https://www.banapresso.com/from_open_storage?ws=fprocess&file=banapresso/menu/img_5bddf026c1db.png"
+    },
+
+    {
+        "name": "녹차바나치노",
+        "price": 4900,
+        "imgurl": "https://www.banapresso.com/from_open_storage?ws=fprocess&file=banapresso/menu/img_623eabcf4f9a.png"
+    },
+
+    {
+        "name": "레몬딸기스무디",
+        "price": 3300,
+        "imgurl": "https://www.banapresso.com/from_open_storage?ws=fprocess&file=banapresso/menu/img_cbe4d65e9e41.png"
+    },
+
+    {
+        "name": "민트초코바나치노",
+        "price": 4200,
+        "imgurl": "https://www.banapresso.com/from_open_storage?ws=fprocess&file=banapresso/menu/img_2e5b04186fec.png"
+    },
+
+    {
+        "name": "허니유자티",
+        "price": 3100,
+        "imgurl": "https://www.banapresso.com/from_open_storage?ws=fprocess&file=banapresso/menu/img_8de49cd0095c.png"
+    },
+
+    {
+        "name": "청포도에이드",
+        "price": 3300,
+        "imgurl": "https://www.banapresso.com/from_open_storage?ws=fprocess&file=banapresso/menu/img_d69e8776ad97.png"
+    },
+
+    {
+        "name": "햄치즈잉글리시머핀",
+        "price": 2500,
+        "imgurl": "https://www.banapresso.com/from_open_storage?ws=fprocess&file=banapresso/menu/img_3f181cb466e5.png"
+    },
+
+    {
+        "name": "레몬마카롱",
+        "price": 2500,
+        "imgurl": "https://www.banapresso.com/from_open_storage?ws=fprocess&file=banapresso/menu/img_c213c6e208e4.png"
+    },
+
+    {
+        "name": "쿠앤크바나치노",
+        "price": 9000,
+        "imgurl": "https://www.banapresso.com/from_open_storage?ws=fprocess&file=banapresso/menu/img_6f4780c0595b.png"
+    }
+]
