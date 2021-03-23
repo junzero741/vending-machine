@@ -2,12 +2,14 @@ import WalletContainer from "./components/Wallet/WalletContainer.js";
 import GoodsContainer from "./components/Goods/GoodsContainer.js";
 
 class App {
-  constructor({$target}) {
+  constructor({ $target }) {
     this.$target = $target;
-    
+
     // containers
     this.wallet = null;
-    
+
+    this.goods = {}
+
     // root state
     this.state = {
       wallet: {
@@ -15,27 +17,27 @@ class App {
         "50": [],
       },
       
-      // vendingMachineComputer: {
-        // currentAmount: []
-        // actionDisplay: []
-      // },
-      
       goods: {
        coke: ["coke", "coke", "coke"],
        cider: ["cider", "cider", "cider"],
        fanta: ["fanta", "fanta", "fanta"],
-      }
+      },
+
+      process: {
+        $target: this.$target,
+        userInputCash: []
+      },
+
     }
     this.setState({});
   }
-
-  setState({type, method, value}) { // destructured value is new state
-    switch(type) {
+  setState({ type, method, value }) { // destructured value is new state
+    switch (type) {
       case "wallet":
         // 비교 함수 생략
         if (method === "new") {
           const updatedWallet = [...this.state.wallet, value];
-          
+
           this.state.wallet = updatedWallet;
         }
         else if (method === "use") {
@@ -48,7 +50,7 @@ class App {
           }
           const updatedWallet = [
             ...this.state.wallet.slice(0, i),
-            ...this.state.wallet.slice(i+1, this.state.wallet.length)
+            ...this.state.wallet.slice(i + 1, this.state.wallet.length)
           ];
           const response = this.state.wallet[i];
 
@@ -57,8 +59,16 @@ class App {
           // 전파
           // 상태화면 변경 함수
           // 상품화면 변경 함수
-          
+
           return response;
+        }
+        break;
+      case "goods":
+        if (method === "add") {
+          const newGoods = [...this.goods[value.name], value];
+          this.goods[value.name] = newGoods;
+        } else if (method === "remove") {
+
         }
         break;
       default:
