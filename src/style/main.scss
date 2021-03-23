@@ -17,6 +17,12 @@ $defaultButtonMargin: 5px;
   background: #333;
 }
 
+@mixin defaultFelx {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 body {
   background: $background;
 }
@@ -38,23 +44,25 @@ body {
   min-width: 250px;
   display: inline-block;
   margin-left: 0px;
+  position: sticky;
+  top: 20px;
 }
 
 .order--title,
 .wallet--title {
+  @include defaultBorder();
   color: #fff;
   font-size: 3rem;
   text-align: center;
-  @include defaultBorder();
   border-radius: $defaultBorderRadius;
   padding: 20px 10px;
   margin-bottom: 10px;
 }
 
 .order--button__container {
+  @include defaultBorder();
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  @include defaultBorder();
   border-radius: $defaultBorderRadius;
   padding: 5px;
 
@@ -82,7 +90,7 @@ body {
 .operating--window__container {
   @include defaultBorder();
   border-radius: $defaultBorderRadius;
-  padding: 5px;
+  padding: 0 5px;
   margin-top: 10px;
   height: fit-content;
 
@@ -96,6 +104,8 @@ body {
   .insert--money__input {
     width: 100%;
     height: 80px;
+    padding-left: 50px;
+    padding-right: 30px;
     font-size: 2rem;
   }
 
@@ -123,36 +133,52 @@ body {
 .wallet--button__container {
   @include defaultBorder();
   border-radius: $defaultBorderRadius;
+  padding: 5px 0;
 }
 
 .wallet--button__box {
+  @include defaultFelx();
   text-align: center;
   background: none;
   border: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  &:first-child,
-  &:last-child {
-    border-radius: 0;
-  }
+  padding: 5px 10px;
 
   .wallet--button {
     width: 100%;
-    height: $defaultButtonHeight;
+    height: $defaultButtonHeight + 2px;
     border-radius: $defaultBorderRadius;
-    margin: 4px;
+    margin-right: 10px;
   }
 
   .wallet--count {
+    @include defaultFelx();
+    @include defaultBorder();
     width: 100%;
-    height: 100%;
-    display: inline-block;
-    text-align: center;
+    height: $defaultButtonHeight + 2px;
     padding: 10px;
     color: #fff;
-    @include defaultBorder();
     border-radius: $defaultBorderRadius;
+  }
+}
+
+.wallet__box {
+  @include defaultBorder();
+  border-radius: 10px;
+  padding: 0 10px;
+  margin-top: 10px;
+
+  .wallet--money__form {
+    padding: 5px;
+  }
+  .wallet--money__input {
+    width: 100%;
+    height: 80px;
+    font-size: 3rem;
+    text-align: right;
+  }
+
+  .wallet--money__input::placeholder {
+    text-align: right;
+    font-size: 2rem;
   }
 }

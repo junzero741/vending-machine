@@ -1,9 +1,19 @@
 import { _ } from '../../util/const';
+import { moneyComma } from '../../util/util';
 
 export default class WalletView {
-  constructor() {
-    this.unitMoneyArray = [10, 50, 100, 500, 1000, 5000, 10000];
-    this.title = 'Lonely Wallet';
+  constructor(unitMoneyArray, myMoney = 25000) {
+    this.unitMoneyArray = unitMoneyArray;
+    this.myMoney = myMoney;
+    this.title = _.walletTitle;
+  }
+
+  render() {
+    return `
+      ${this.renderTitle()}
+      ${this.renderUnitMoneyButton()}
+      ${this.renderWalletMoney()}
+    `;
   }
 
   renderTitle() {
@@ -14,30 +24,33 @@ export default class WalletView {
       `;
   }
 
-  renderWalletMoney() {
-    return `
-    <div class="order--title">
-      ${this.title}
-    </div>
-      `;
-  }
-
   getWalletMoney() {
     return `
-    <div class="list-group-item order--button__box">
-      <button type="button" class="btn btn-default order--button">${this.order}</button>
-      <div class="order--price"><span>${this.price}</span></div>
+    <form class="navbar-form wallet--money__form" role="search">
+      <div class="form-group form-group-div">
+        <input type="text" class="form-control wallet--money__input" placeholder="${
+          _.money
+        }" value="${moneyComma(this.myMoney)} ${_.money}">
+      </div>
+    </form>
+      `;
+  }
+
+  renderWalletMoney() {
+    return `
+    <div class="wallet__box">
+      ${this.getWalletMoney()}
     </div>
       `;
   }
 
-  getOperatingInfo() {}
-
-  getUnitMoneyButton(unit) {
+  getUnitMoneyButton({ unit, count }) {
     return `
     <div class="list-group-item wallet--button__box">
-      <button type="button" class="btn btn-default wallet--button">${unit} ${_.money}</button>
-      <div class="wallet--count"><span>count ${_.count}</span></div>
+      <button type="button" class="btn btn-default wallet--button">${moneyComma(
+        unit
+      )} ${_.money}</button>
+      <div class="wallet--count"><span>${count} ${_.count}</span></div>
     </div>
     `;
   }

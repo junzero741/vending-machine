@@ -1,7 +1,7 @@
 import { _ } from '../../util/const';
 
 export default class OperatingView {
-  renderView() {
+  render() {
     return `
     <div class="operating--window__container">
       ${this.renderInsertMoney()}
