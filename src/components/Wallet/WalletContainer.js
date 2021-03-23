@@ -4,3 +4,5 @@ class WalletContainer {
   }
 
 }
+
+export default WalletContainer;
