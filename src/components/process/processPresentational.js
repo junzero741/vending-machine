@@ -1,14 +1,12 @@
-class messagePresentational {
-    constructor($target, message) {
-        this.render($target, message);
+class processPresentational {
+    constructor($target) {
+        this.render($target);
     }
 
     addEvent() {
 
     }
 
-    render($target, message) {
+    render($target) {
     }
-
-
 }

@@ -1,13 +1,13 @@
-import CurrentMoneyContainer from "./currentMoneyDisplay/currentMoneyContatiner";
-import MessagesContainer from "./messages/messagesContainer"
-import ReturnButtonPresentational from "./returnButton/returnButtonPresentational"
+import CurrentMoneyContainer from "./currentMoneyDisplay/currentMoneyContatiner.js";
+import MessagesContainer from "./messages/messagesContainer.js"
+import ReturnButtonContainer from "./returnButton/returnButtonContainer.js"
 
 class ProcessContainer {
-    constructor({ $target }) {
-        //어디선가 render할 것이고 , 그때마다 상태 변경
+    constructor({ $target, type, method, item }) {
         this.$target = $target;
-        this.totalCash = [];
+        this.moneyPocket = [];
         this.messages = [];
+
         this.setState({ type, method, item });
     }
 
@@ -15,17 +15,17 @@ class ProcessContainer {
         switch (type) {
             case "cash":
                 // cash 상태 변경
-                this.totalCash.push(item);
-                this.currentMoney += this.totalCash;
+                this.moneyPocket.push(item);
+                this.currentMoney += this.moneyPocket;
                 // 메시지 상태 변경
                 this.updateMessage({ method, item })
                 break;
 
             case "goods":
                 this.updateMessage({ method, item })
-                // messages 업데이트 후 goods선택 해 따라 currenMoney변경
-                // 토탈 캐쉬를 리셋
-                // 알고리즘을 돌린 리턴을 뱉는다.
+                // this.moneyPocket = this.changeMoney({ currentMoney: this.currentMoney, price: goods.price });
+                // this.currentMoney = 0;
+                // this.currentMoney += changeMoney.reduce((acc, curr) => acc + curr, 0)
                 break;
 
             default:
@@ -40,6 +40,8 @@ class ProcessContainer {
             case "put":
                 return `${item}원이 투입 되었습니다.`
 
+            // 현재 return버튼 누르면 message rerendering..
+            // 검토 후 case 삭제 예정..
             case "return":
                 return `잔돈 ${item}원이 반환 되었습니다.`
 
@@ -55,20 +57,39 @@ class ProcessContainer {
         this.currentMessages += this.messages;
     }
 
+    changeMoney({ currentMoney, price }) {
+        const change = currentMoney - price;
+        //거스름돈 알고리즘
+    }
+
     render() {
+        const $currentMoney = document.createElement("section");
+        $currentMoney.className = "currentMoney-section";
+
+        const $returnButton = document.createElement("button");
+        $returnButton.className = "returnButton";
+
+        const $messages = document.createElement("section");
+        $messages.className = "messages-section";
+
+        const nodes = [$currentMoney, $returnButton, $messages]
+
+        nodes.forEach((node) => this.$target.appendChild(node))
+
         this.components = {
             currentMoney: new CurrentMoneyContainer({
-                $target: "Dom Selector",
+                $target: $currentMoney,
                 currentMoney: this.currentMoney
             }),
+            returnButton: new ReturnButtonContainer({
+                $target: $returnButton,
+                moneyPocket: this.moneyPocket
+            }),
             messages: new MessagesContainer({
-                $target: "Dom Selector",
+                $target: $messages,
                 currentMessages: this.currentMessages
             })
         }
-        // this.presentationals = {
-        //     returnButton: new ReturnButtonPresentational()
-        // }
     }
 }
 
