@@ -20,16 +20,7 @@ class GoodsContainer {
     const $goods = document.createElement("ul");
     $goods.className = "goods"
 
-    /* 
-    goods: {
-      coke: ["coke", "coke", "coke"],
-      cider: ["cider", "cider"],
-      fanta: [],
-    }
-    */
-    
     for(const name in this.goods) {
-      console.log(name)
       const $good = document.createElement("li");
       const item = new ItemContainer({
         $target: $good,

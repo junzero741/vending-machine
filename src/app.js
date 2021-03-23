@@ -2,16 +2,19 @@ import WalletContainer from "./components/Wallet/WalletContainer.js";
 import GoodsContainer from "./components/Goods/GoodsContainer.js";
 import ProcessContainer from "./components/process/processContainer.js";
 
+import { Coke, PineappleFanta, Cider } from "./util/objects/goods.js";
+
 class App {
   constructor({ $target }) {
     this.$target = $target;
 
-    // containers
+    // components
     this.wallet = null;
+    this.goods = null;
+    this.process = null;
 
-    this.goods = {}
-
-    // root state
+    // root state 
+    // 향후 모델로 옮겨집니다.
     this.state = {
       wallet: {
         "10": [],
@@ -19,9 +22,9 @@ class App {
       },
 
       goods: {
-        coke: ["coke", "coke", "coke"],
-        cider: ["cider", "cider", "cider"],
-        fanta: ["fanta", "fanta", "fanta"],
+        coke: Array(10).fill(new Coke()),
+        cider: Array(10).fill(new Cider()),
+        pineappleFanta: Array(10).fill(new PineappleFanta()),
       },
 
       process: {
@@ -77,7 +80,8 @@ class App {
       default:
         break;
     }
-    this.render() // 상태가 바뀜, 리렌더
+    // 상태가 변화 했으므로 리렌더
+    this.render();
   }
 
   handleChangeWallet({ method, value }) {
@@ -89,11 +93,10 @@ class App {
     this.setState(state);
   }
 
-  handleChangeGoods({ method, value }) {
-
-  }
+  // handleChangeGoods({ method, value }) {}
 
   render() {
+    
     this.wallet = new WalletContainer({
       $target: this.$target,
       handleChangeWallet: this.handleChangeWallet.bind(this),
