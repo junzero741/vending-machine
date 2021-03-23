@@ -1,5 +1,6 @@
 import WalletContainer from "./components/Wallet/WalletContainer.js";
 import GoodsContainer from "./components/Goods/GoodsContainer.js";
+import ProcessContainer from "./components/process/processContainer.js";
 
 class App {
   constructor({ $target }) {
@@ -16,16 +17,18 @@ class App {
         "10": [],
         "50": [],
       },
-      
+
       goods: {
-       coke: ["coke", "coke", "coke"],
-       cider: ["cider", "cider", "cider"],
-       fanta: ["fanta", "fanta", "fanta"],
+        coke: ["coke", "coke", "coke"],
+        cider: ["cider", "cider", "cider"],
+        fanta: ["fanta", "fanta", "fanta"],
       },
 
       process: {
         $target: this.$target,
-        userInputCash: []
+        type: "cash",
+        method: "put",
+        // item : initial setting cash
       },
 
     }
@@ -76,8 +79,8 @@ class App {
     }
     this.render() // 상태가 바뀜, 리렌더
   }
-  
-  handleChangeWallet({method, value}) {
+
+  handleChangeWallet({ method, value }) {
     const state = {
       type: "wallet",
       method: method,
@@ -85,8 +88,8 @@ class App {
     };
     this.setState(state);
   }
-  
-  handleChangeGoods({method, value}) {
+
+  handleChangeGoods({ method, value }) {
 
   }
 
@@ -100,6 +103,13 @@ class App {
       $target: this.$target,
       goods: this.state.goods,
       handleChangeGoods: this.handleChangeGoods.bind(this),
+    })
+
+    this.process = new ProcessContainer({
+      $target: this.$target,
+      type: this.state.process.type,
+      method: this.state.process.method,
+      // item : this.state.process.item
     })
   }
 }
