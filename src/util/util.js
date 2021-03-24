@@ -1,4 +1,4 @@
-const createRandomNumber = () => Math.floor(Math.random() * (5 - 0) + 0);
+const createRandomNumber = (max, min = 0) => Math.floor(Math.random() * (max - min) + min);
 const moneyComma = (num) => {
   const arr = num.toString().split('');
   const comma = arr.reduce((acc, cur, idx) => {

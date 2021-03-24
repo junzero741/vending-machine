@@ -6,7 +6,7 @@ export default class CreateWalletData {
     const walletDataArray = _.walletMoneyArray.map((el) => {
       return {
         unit: el,
-        count: createRandomNumber(),
+        count: createRandomNumber(_.walletMoneyCount),
       };
     });
     return walletDataArray;
@@ -16,7 +16,6 @@ export default class CreateWalletData {
     const walletDataArray = this.getWalletData();
     const walletMoney = walletDataArray.reduce((acc, cur) => {
       const units = cur.unit * cur.count;
-      console.log(cur.unit, cur.count);
       acc += units;
       return acc;
     }, 0);

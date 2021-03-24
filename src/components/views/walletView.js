@@ -2,7 +2,7 @@ import { _ } from '../../util/const';
 import { moneyComma } from '../../util/util';
 
 export default class WalletView {
-  constructor(unitMoneyArray, myMoney = 25000) {
+  constructor(unitMoneyArray, myMoney) {
     this.unitMoneyArray = unitMoneyArray;
     this.myMoney = myMoney;
     this.title = _.walletTitle;
@@ -28,9 +28,7 @@ export default class WalletView {
     return `
     <form class="navbar-form wallet--money__form" role="search">
       <div class="form-group form-group-div">
-        <input type="text" class="form-control wallet--money__input" placeholder="${
-          _.money
-        }" value="${moneyComma(this.myMoney)} ${_.money}">
+        <input type="text" class="form-control wallet--money__input" placeholder="${_.money}" value="${moneyComma(this.myMoney)} ${_.money}">
       </div>
     </form>
       `;
@@ -47,9 +45,7 @@ export default class WalletView {
   getUnitMoneyButton({ unit, count }) {
     return `
     <div class="list-group-item wallet--button__box">
-      <button type="button" class="btn btn-default wallet--button">${moneyComma(
-        unit
-      )} ${_.money}</button>
+      <button type="button" class="btn btn-default wallet--button">${moneyComma(unit)} ${_.money}</button>
       <div class="wallet--count"><span>${count} ${_.count}</span></div>
     </div>
     `;
@@ -57,7 +53,7 @@ export default class WalletView {
 
   renderUnitMoneyButton() {
     const buttonGroup = this.unitMoneyArray.reduce((acc, cur) => {
-      let button = this.getUnitMoneyButton(cur);
+      const button = this.getUnitMoneyButton(cur);
       acc += button;
       return acc;
     }, ``);

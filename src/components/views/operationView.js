@@ -1,12 +1,12 @@
 import { _ } from '../../util/const';
 
-export default class OperatingView {
+export default class OperationView {
   render() {
     return `
     <div class="operating--window__container">
       ${this.renderInsertMoney()}
       ${this.renderExtraMoneyButton()}
-      ${this.renderOperatingWindow()}
+      ${this.renderOperationWindow()}
     </div>
     `;
   }
@@ -29,7 +29,7 @@ export default class OperatingView {
     `;
   }
 
-  renderOperatingWindow() {
+  renderOperationWindow() {
     return `
     <form class="navbar-form insert--money__form" role="search">
       <div class="form-group form-group-div">
@@ -39,5 +39,5 @@ export default class OperatingView {
     `;
   }
 
-  getOperatingInfo() {}
+  getOperationInfo() {}
 }

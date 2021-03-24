@@ -1,6 +1,6 @@
 $background: #222;
-$defaultButtonWidth: 77px;
-$defaultButtonHeight: 50px;
+$defaultButtonWidth: 95px;
+$defaultButtonHeight: 60px;
 $defaultFontSize: 16px;
 $defaultBorderRadius: 10px;
 $defaultButtonMargin: 5px;
@@ -69,12 +69,19 @@ body {
   .list-group-item:last-child {
     margin: $defaultButtonMargin;
   }
+
+  img {
+    border-radius: $defaultBorderRadius;
+    width: 48px;
+    height: 48px;
+  }
 }
 
 .order--button__box {
   text-align: center;
   border-radius: 4px;
   margin: $defaultButtonMargin;
+  padding: 5px 5px;
 
   .order--button {
     width: $defaultButtonWidth;
@@ -145,7 +152,7 @@ body {
 
   .wallet--button {
     width: 100%;
-    height: $defaultButtonHeight + 2px;
+    height: $defaultButtonHeight - 20px;
     border-radius: $defaultBorderRadius;
     margin-right: 10px;
   }
@@ -154,7 +161,7 @@ body {
     @include defaultFelx();
     @include defaultBorder();
     width: 100%;
-    height: $defaultButtonHeight + 2px;
+    height: $defaultButtonHeight - 20px;
     padding: 10px;
     color: #fff;
     border-radius: $defaultBorderRadius;

@@ -1,37 +1,31 @@
-import CreateMoneyData from '../models/createMoneyData';
 import CreateWalletData from '../models/createWalletData';
-import OperatingView from './operatingView';
-import OrderScreen from './orderScreen';
-import WalletView from './walletView';
+import OperationView from './operationView';
 
-const createMoneyData = new CreateMoneyData();
-createMoneyData.getOrderData().then((res) => console.log(res.data));
+import OrderView from './orderView';
+import WalletView from './walletView';
 
 const createWalletData = new CreateWalletData();
 const walletData = createWalletData.getWalletMoney();
 
 export default class MainView {
   constructor() {
-    this.orderScreen = new OrderScreen();
-    this.operatingScreen = new OperatingView();
-    this.walletScreen = new WalletView(
-      walletData.walletDataArray,
-      walletData.walletMoney
-    );
+    this.orderView = new OrderView();
+    this.operationView = new OperationView();
+    this.walletView = new WalletView(walletData.walletDataArray, walletData.walletMoney);
   }
 
-  init() {
-    return this.render();
+  async init() {
+    return await this.render();
   }
-  render() {
+  async render() {
     return `
     <div class="body__container">
       <div class="vending-machine">
-        ${this.orderScreen.render()}
-        ${this.operatingScreen.render()}
+        ${await this.orderView.render()}
+        ${this.operationView.render()}
       </div>
       <div class="raccoon-wallet">
-        ${this.walletScreen.render()}
+        ${this.walletView.render()}
       </div>
     </div>
     `;
