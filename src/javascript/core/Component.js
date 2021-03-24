@@ -1,11 +1,10 @@
 export default class Component {
-  constructor($newtarget, newProps) {
+  constructor($newtarget, newProps, tagName) {
     this.$target = null;
     this.selfProps = null;
-    this.$self = document.createElement('div');
+    this.$self = document.createElement(tagName);
     this.children = [];
     this.render($newtarget, newProps);
-    // this.mountComponents();
     this.setEventLinstener();
   }
   selectPropsToUse() {
@@ -34,10 +33,10 @@ export default class Component {
     }
 
     if (isDiffProps) {
-      this.$self.outerHTML = this.getTemplate();
+      this.$self.innerHTML = this.getTemplate();
       this.mountComponents();
     }
-    // this.reRenderChildren();
+    this.reRenderChildren();
   }
   isDiffTarget($newTarget) {
     return this.$target !== $newTarget;
@@ -50,10 +49,10 @@ export default class Component {
     return JSON.stringify(prevProps) !== JSON.stringify(nextProps);
   }
 
-  createComponent(Constructor, targetSelector, getProps) {
+  createComponent(Constructor, targetSelector, getProps, tagName = 'div') {
     const $target = this.$target.querySelector(targetSelector);
     const props = getProps();
-    const component = new Constructor($target, props);
+    const component = new Constructor($target, props, tagName);
     this.addToChildren(targetSelector, getProps, component);
   }
   addToChildren(targetSelector, getProps, component) {
@@ -66,11 +65,11 @@ export default class Component {
     });
   }
   addEventLinstener(eventType, selector, callback) {
-    const children = [...this.$self.querySelectorAll(selector)];
+    const children = [...this.$target.querySelectorAll(selector)];
     const isTarget = (target) => {
       return children.includes(target) || target.closest(selector);
     };
-    this.$self.addEventListener(eventType, (event) => {
+    this.$target.addEventListener(eventType, (event) => {
       if (!isTarget(event.target)) return false;
       callback(event);
     });
