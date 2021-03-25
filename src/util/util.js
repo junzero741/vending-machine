@@ -1,3 +1,8 @@
+import { _ } from './const';
+
+const $ = document.querySelector.bind(document);
+const $$ = document.querySelectorAll.bind(document);
+
 const createRandomNumber = (max, min = 0) => Math.floor(Math.random() * (max - min) + min);
 const moneyComma = (num) => {
   const arr = num.toString().split('');
@@ -11,4 +16,12 @@ const moneyComma = (num) => {
   return comma;
 };
 
-export { createRandomNumber, moneyComma };
+const updateInputData = (className, data) => {
+  const inputClassName = $(`.${className}`);
+  inputClassName.value = `${moneyComma(data)} ${_.money}`;
+};
+
+const isEmpty = (data) => +data === 0;
+const changeSoldOutColor = (element) => (element.disabled = true);
+
+export { $, $$, createRandomNumber, moneyComma, updateInputData, isEmpty, changeSoldOutColor };

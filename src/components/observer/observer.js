@@ -13,9 +13,7 @@ export default class Observer {
     });
   }
 
-  fire() {
-    this.observers.forEach((fn) => {
-      fn.call();
-    });
+  fire(data) {
+    this.observers.forEach((fn) => fn(data));
   }
 }

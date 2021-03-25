@@ -1,6 +1,11 @@
 import { _ } from '../../util/const';
+import OperationModel from '../models/operationModel';
 
 export default class OperationView {
+  constructor() {
+    this.display = new OperationModel();
+  }
+
   render() {
     return `
     <div class="operating--window__container">
@@ -15,7 +20,7 @@ export default class OperationView {
     return `
     <form class="navbar-form insert--money__form" role="search">
       <div class="form-group form-group-div">
-        <input type="text" class="form-control insert--money__input" placeholder="${_.money}">
+        <input type="text" class="form-control insert--money__input" placeholder="${_.money}" value="${this.display.insertMoney} ${_.money}">
       </div>
     </form>
       `;
@@ -33,7 +38,7 @@ export default class OperationView {
     return `
     <form class="navbar-form insert--money__form" role="search">
       <div class="form-group form-group-div">
-        <input type="text" class="form-control operating--window" placeholder="${_.info}">
+        <input type="text" class="form-control operating--window" placeholder="${_.info}" value="${this.display.message}">
       </div>
     </form>
     `;

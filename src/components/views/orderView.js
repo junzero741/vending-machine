@@ -1,6 +1,6 @@
 import { _ } from '../../util/const';
 import { createRandomNumber } from '../../util/util';
-import FetchAPI from '../models/fetchAPI';
+import FetchAPI from '../getData/fetchAPI';
 import ProductModel from '../models/productModel';
 
 export default class OrderView {
@@ -26,13 +26,13 @@ export default class OrderView {
       `;
   }
 
-  getOrderItem(order, price, imgUrl) {
+  getOrderItem(order, price, imgUrl, count) {
     return `
     <div class="list-group-item order--button__box">
-      <button type="button" class="btn btn-default order--button">
-        <img src=${imgUrl} title=${order} alt=${order}>
+      <button type="button" class="btn btn-default order--button" data-count="${count}">
+        <img src=${imgUrl} title="${order}" alt="${order}">
+        <div class="order--price"><span>${price} ${_.money}</span></div>
       </button>
-      <div class="order--price"><span>${price} ${_.money}</span></div>
     </div>
     `;
   }
@@ -53,7 +53,6 @@ export default class OrderView {
         imgUrl: `http://ddragon.leagueoflegends.com/cdn/11.6.1/img/item/${itemKey}.png`,
       };
     });
-
     this.productList = orderDataList.map((el) => {
       const product = new ProductModel(el.order, el.price, el.imgUrl);
       return product;
@@ -62,8 +61,8 @@ export default class OrderView {
 
   renderOrderView() {
     const orderView = this.productList.reduce((acc, value) => {
-      const [order, price, imgUrl] = [value.order, value.price, value.imgUrl];
-      acc += this.getOrderItem(order, price, imgUrl);
+      const { order, price, imgUrl, count } = value;
+      acc += this.getOrderItem(order, price, imgUrl, count);
       return acc;
     }, ``);
 

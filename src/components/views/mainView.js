@@ -1,17 +1,13 @@
-import CreateWalletData from '../models/createWalletData';
 import OperationView from './operationView';
 
 import OrderView from './orderView';
 import WalletView from './walletView';
 
-const createWalletData = new CreateWalletData();
-const walletData = createWalletData.getWalletMoney();
-
 export default class MainView {
   constructor() {
     this.orderView = new OrderView();
     this.operationView = new OperationView();
-    this.walletView = new WalletView(walletData.walletDataArray, walletData.walletMoney);
+    this.walletView = new WalletView();
   }
 
   async init() {
