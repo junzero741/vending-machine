@@ -1,96 +1,171 @@
-import CurrentMoneyContainer from "./currentMoneyDisplay/currentMoneyContatiner.js";
-import MessagesContainer from "./messages/messagesContainer.js"
-import ReturnButtonContainer from "./returnButton/returnButtonContainer.js"
+import CurrentMoneyPresentational from "./currentMoneyDisplay/currentMoneyPresentational.js";
+import ReturnButtonPresentational from "./returnButton/returnButtonPresentational.js"
+import MessagesPresentational from "./messages/messagesPresentational.js"
 
 class ProcessContainer {
-    constructor({ $target, type, method, item }) {
-        this.$target = $target;
-        this.moneyPocket = [];
-        this.messages = [];
+	constructor({ $target, state }) {
+		this.$target = $target;
 
-        this.setState({ type, method, item });
-    }
+		this.moneyPocket = [];
+		this.currentMoney = null;
+		this.messages = [];
 
-    setState({ type, method, item }) {
-        switch (type) {
-            case "cash":
-                // cash 상태 변경
-                this.moneyPocket.push(item);
-                this.currentMoney += this.moneyPocket;
-                // 메시지 상태 변경
-                this.updateMessage({ method, item })
-                break;
+		this.presentationals = null;
 
-            case "goods":
-                this.updateMessage({ method, item })
-                // this.moneyPocket = this.changeMoney({ currentMoney: this.currentMoney, price: goods.price });
-                // this.currentMoney = 0;
-                // this.currentMoney += changeMoney.reduce((acc, curr) => acc + curr, 0)
-                break;
+		const testState = {
+			type: "CHANGE_CASH",
+			method: "put",
+			item: 1000
+		}
 
-            default:
-                new Error(`${type} is undefined !`);
-                break;
-        }
-        this.render();
-    }
+		const testState2 = {
+			type: "SELECT_GOODS",
+			method: "selected",
+			item: { name: "COKE", price: 500 }
+		}
 
-    selectMessage({ method, item }) {
-        switch (method) {
-            case "put":
-                return `${item}원이 투입 되었습니다.`
+		const testState3 = {
+			type: "INIT"
+		}
+		this.setState(state);
+		// this.setState(testState)
+	}
 
-            // 현재 return버튼 누르면 message rerendering..
-            // 검토 후 case 삭제 예정..
-            case "return":
-                return `잔돈 ${item}원이 반환 되었습니다.`
+	setState(state) {
+		// 메시지 업데이트
+		this.updateMessage(state);
+		// 상태 변경 
+		switch (state.type) {
+			case "CHANGE_CASH":
+				if (state.method === "put") {
+					this.moneyPocket.push(state.item);
+					this.currentMoney += state.item;
+				}
+				else if (state.method === "return") {
+					this.currentMoney -= state.item;
+				}
 
-            case "selected":
-                return `${item} 선택`
-        }
-    }
+			case "SELECT_GOODS":
+				if (state.method === "selected") {
+					this.currentMoney -= state.item.price;
+					this.moneyPocket = this.changeMoney(this.currentMoney);
+					console.log(this.moneyPocket)
+				}
+				break;
+			default:
+				new Error(`${state.type} || ${state.method} is undefined`);
+				break;
+		}
+		// 상태 변경 후 리렌더링
+		this.render();
+	}
 
-    updateMessage({ method, item }) {
-        this.messages.push(
-            this.selectMessage({ method, item })
-        );
-        this.currentMessages += this.messages;
-    }
+	returnMoney() {
+		const shiftedCoin = this.moneyPocket.shift();
 
-    changeMoney({ currentMoney, price }) {
-        const change = currentMoney - price;
-        //거스름돈 알고리즘
-    }
+		const state = {
+			type: "CHANGE_CASH",
+			method: "return",
+			item: shiftedCoin
+		};
 
-    render() {
-        const $currentMoney = document.createElement("section");
-        $currentMoney.className = "currentMoney-section";
+		this.setState(state);
 
-        const $returnButton = document.createElement("button");
-        $returnButton.className = "returnButton";
+		if (this.moneyPocket.length !== 0) {
+			this.returnMoney();
+		}
+	}
 
-        const $messages = document.createElement("section");
-        $messages.className = "messages-section";
+	updateMessage(state) {
+		this.messages.push(this.selectMessage(state));
+	}
 
-        const nodes = [$currentMoney, $returnButton, $messages]
+	selectMessage(state) {
+		switch (state.type) {
+			case "INIT":
+				this.currentMoney = 0;
+				return `자판기 시작`
 
-        nodes.forEach((node) => this.$target.appendChild(node))
+			case "CHANGE_CASH":
+				if (state.method === "put") {
+					return `${state.item}원이 투입 되었습니다.`
+				}
+				else if (state.method === "return") {
+					return `잔돈 ${state.item}원이 반환 되었습니다.`
+				}
+				break;
 
-        this.components = {
-            currentMoney: new CurrentMoneyContainer({
-                $target: $currentMoney,
-                currentMoney: this.currentMoney
-            }),
-            returnButton: new ReturnButtonContainer({
-                $target: $returnButton,
-                moneyPocket: this.moneyPocket
-            }),
-            messages: new MessagesContainer({
-                $target: $messages,
-                currentMessages: this.currentMessages
-            })
-        }
-    }
+			case "SELECT_GOODS":
+				if (state.method === "selected") {
+					return `${state.item.name} 선택 하셨습니다.`
+				}
+				break;
+
+			default:
+				new Error(`${state.type} || ${state.method} || ${state.item} is undefined`)
+				break;
+		}
+	}
+
+	changeMoney(currentMoney) {
+		const currentMoneyArr = currentMoney.toString().split("").reverse();
+		let zero = "";
+		let change = [];
+
+		for (let i = 0; i < currentMoneyArr.length; i++) {
+			const share = parseInt(currentMoneyArr[i] / 5);
+			const rest = parseInt(currentMoneyArr[i] % 5);
+
+			const fiveMoney = (share + zero) * 5;
+			const oneMoney = [];
+
+			for (let j = 0; j < rest; j++) {
+				if (rest === 0) break;
+				oneMoney.push(Number(1 + zero))
+			}
+
+			change.push(fiveMoney);
+			oneMoney.forEach(v => change.push(v));
+			zero += "0";
+		}
+		change = change.filter(v => v !== 0)
+		return change
+	}
+
+	render() {
+		const $process = document.createElement("section");
+		$process.className = "process";
+
+		const $currentMoney = document.createElement("section");
+		$currentMoney.className = "current-money-section";
+
+		const $returnButton = document.createElement("section");
+		$returnButton.className = "return-button-section";
+
+		const $messages = document.createElement("section");
+		$messages.className = "messages-section";
+
+		const elements = [$currentMoney, $returnButton, $messages];
+
+		elements.forEach((element) => $process.appendChild(element))
+
+		this.$target.appendChild($process)
+
+		this.presentationals = {
+			currentMoney: new CurrentMoneyPresentational({
+				$target: $currentMoney,
+				currentMoney: this.currentMoney
+			}),
+			returnButton: new ReturnButtonPresentational({
+				$target: $returnButton,
+				reset: this.returnMoney.bind(this)
+			}),
+			messages: new MessagesPresentational({
+				$target: $messages,
+				messages: this.messages
+			})
+		}
+	}
 }
 
 export default ProcessContainer;

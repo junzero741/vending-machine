@@ -1,23 +1,31 @@
 import ItemPresentational from "./ItemPresentational.js";
 import * as ITME_ENUM from "../../../util/enums/item.js";
-// import "./item.scss";
+
+// import { useDispatch, useSubscribe, useSelector } from "../../../util/store/useStore.js";
+// import { outItem } from "../../../util/actions/goods.js";
+// import * as ACTION from "../../../util/enums/action.js";
+
+import "./item.scss";
 
 // const STATUS = ["default", "isAbleToBuy", "isSoldOut"];
 
 class ItemContainer {
-  constructor({ $target, name, amount }) {
+  constructor({ $target, name, korean, amount, handleChangeGoods }) {
     this.$target = $target;
     this.presentational = null;
 
     // state
     this.amount = null;
     this.name = name;
+    this.korean = korean;
     this.status = ITME_ENUM.STATUS.default;
     
-    this.setState({
-      type: "amount", value: amount
-    });
+    this.onChangeGoods = handleChangeGoods;
+    
+    this.setState({ type: "amount", value: amount });
+
   }
+
   setState({type, value}) {
     switch(type) {
       case "amount":
@@ -38,16 +46,20 @@ class ItemContainer {
     this.setState({ type: "status", value: ITME_ENUM.STATUS.isAbleToBuy });
   }
 
+
   isSelected(value) {
-    console.log("isSelected value", value);
-    // 옵저버블의 dispatch() 이벤트로 향후 갈 것이다.
+    this.onChangeGoods(value)
   }
 
   render() {
+    this.$target.innerHTML = "";
+    
     this.presentational = new ItemPresentational({
       $target: this.$target, 
       name: this.name,
+      korean: this.korean,
       status: this.status,
+      amount: this.amount,
       isSelected: this.isSelected.bind(this)
     });
   }

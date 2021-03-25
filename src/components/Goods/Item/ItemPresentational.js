@@ -1,11 +1,11 @@
 import * as ITEM_ENUM from "../../../util/enums/item.js";
 
 class ItemPresentational {
-  constructor({ $target, name, status, isSelected }) {
-    this.render($target, name, status, isSelected);
+  constructor({ $target, korean, name, status, amount, isSelected }) {
+    this.render($target, korean, name, status, amount, isSelected);
   }
   
-  render($target, name, status, isSelected) {
+  render($target, korean, name, status, amount, isSelected) {
     $target.innerHTML = ""; // 초기화
     
     const $item = document.createElement("div");
@@ -15,19 +15,19 @@ class ItemPresentational {
     switch (status) {
       case ITEM_ENUM.STATUS.default:
         $itemContents = /* html */ `
-          <span> ${name} </span>
+          <span> ${korean}, ${amount} </span>
         `;
         break;
       case ITEM_ENUM.STATUS.isAbleToBuy:
         $item.className += " isAbleToBuy"
         $itemContents = /* html */ `
-          <span> ${name} 구매가능 </span>
+          <span> ${korean} 구매가능 </span>
         `;
         break;
       case ITEM_ENUM.STATUS.isSoldOut:
         $item.className += " isSoldOut"
         $itemContents = /* html */ `
-          <span> ${name} 품절 </span>
+          <span> ${korean} 품절 </span>
         `;
         break; 
     }
@@ -35,11 +35,10 @@ class ItemPresentational {
     
     $item.addEventListener("click", (e) => {
       console.log(e.target.innerText, e.target);
-      isSelected(e.target.innerText)
+      isSelected(name)
     })
 
     $target.append($item);
-
     
   }
 }

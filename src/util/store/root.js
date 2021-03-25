@@ -1,25 +1,17 @@
-import { goods as goodsReducer } from "../reducers/goods.js";
+import createStore from "./createStore.js";
 
-const reducers = [goodsReducer];
+import goods from "../reducers/goods.js";
+import wallet from "../reducers/wallet.js";
 
-const store = createStore(reducers);
+const reducers = {
+  goods,
+  wallet
+};
 
-const createStore = (reducers) => {
-  
-  const observable = {
-    observeListeners: [],
-    subscribe: (observer) => {
-      this._observers.add(observer);
-    },
-    unsubscribe: (observer) => {
-      this._observers = [...this._observers].filter(subscriber => subscriber !== observer);
-    },
-    notify: (data) => {
-      this._observers.forEach(observer => observer(data));
-    }
-  }
-  
-  return observable;
+const store = {};
+
+for (const reducer in reducers) {
+  store[reducer] = createStore(reducers[reducer]);
 }
 
 export default store;

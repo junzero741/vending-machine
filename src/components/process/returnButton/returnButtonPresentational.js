@@ -1,19 +1,25 @@
 class ReturnButtonPresentational {
-    constructor({ $target, moneyPocket }) {
-        // this.moneyPocket = moneyPocket;
-        // this.totalMoney = this.moneyPocket.reduce((acc, curr) => acc + curr, 0)
-        this.addEvent($target, moneyPocket)
-    }
+	constructor({ $target, reset }) {
+		this.$target = $target
 
-    //5초뒤 자동반환을 어떡할까..
+		this.render(this.$target)
+		this.addEvent(reset)
+	}
 
-    addEvent($target, moneyPocket) {
-        $target.addEventListener("click", this.render.bind(this, moneyPocket))
-        //this.accMoney message select & setState
-    }
+	addEvent(reset) {
+		this.$target.querySelector(".return-button").addEventListener("click", () => reset())
+	}
 
-    render(moneyPocket) {
-    }
+	render($target) {
+		$target.innerHTML = "";
+
+		const $returnButton = `
+            <button class="return-button">반환</button>
+        `
+
+		$target.insertAdjacentHTML("beforeend", $returnButton)
+	}
+
 }
 
 export default ReturnButtonPresentational

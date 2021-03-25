@@ -1,12 +1,11 @@
-// const ADD_ITEM = "goods/ADD_ITEM";
-// const OUT_ITEM = "goods/OUT_ITEM";
+import * as ACTION from "../enums/action.js"
 
 const addItem = (item) => {
-  return {type: ADD_ITEM, item }
+  return { type: ACTION.ADD_ITEM, payload: item }
 }
 
 const outItem = (item) => {
-  return {type: OUT_ITEM, item }
+  return { type: ACTION.OUT_ITEM, payload: item }
 }
 
-export {addItem, outItem};
+export { addItem, outItem };
