@@ -7,12 +7,15 @@ class coinItem {
   init() {
     this.render();
   }
+  update() {
+    this.parent.innerHTML = "";
+  }
   render() {
     this.parent.innerHTML += this.makeCoinTemplate();
   }
   makeCoinTemplate() {
     return `<li>
-    <div>${this.unit}원</div>
+    <button class="${this.unit}">${this.unit}원</button>
     <div>${this.cnt}개</div>
     </li>`;
   }

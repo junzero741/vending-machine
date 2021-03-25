@@ -1,7 +1,7 @@
 const coin = [
   {
     unit: 10,
-    cnt: 0,
+    cnt: 0, 
   },
   {
     unit: 50,

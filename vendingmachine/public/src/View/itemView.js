@@ -1,8 +1,9 @@
 class ItemView {
-  constructor(name, price, parent) {
+  constructor(name, price, available, parent) {
     this.name = name;
     this.price = price;
     this.parent = parent;
+    this.available = available;
   }
   init() {
     this.render();
@@ -11,10 +12,10 @@ class ItemView {
     this.parent.innerHTML += this.makeTemplate();
   }
   makeTemplate() {
-    return `<div class="item">
+    return `<button ${this.available ? "" : "disabled"} class="item">
         <span>${this.name}</span>
         <span>${this.price}</span>
-      </div>`;
+      </button>`;
   }
 }
 

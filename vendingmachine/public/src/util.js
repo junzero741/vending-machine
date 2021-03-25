@@ -15,5 +15,14 @@ const _ = {
     target.addEventListener(type, listener, useCapture),
 
   delay: (time) => new Promise((resolve) => setTimeout(() => resolve(), time)),
+
+  genEl: (tagName, { classNames, template } = {}) => {
+    const $el = document.createElement(tagName);
+    if (classNames) $el.classList.add(...classNames);
+    if (template) $el.innerHTML = template;
+    return $el;
+  },
+
+  save: (key, data) => localStorage.setItem(key, data),
 };
 export default _;

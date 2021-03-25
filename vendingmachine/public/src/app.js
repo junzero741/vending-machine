@@ -1,16 +1,19 @@
-import WalletView from "./walletView.js";
 import _ from "./util.js";
 import product from "./product.js";
-import Item from "./item.js";
-import ListView from "./listView.js";
+import coin from "./coin.js";
+import WalletView from "./View/walletView.js";
+import LogView from "./View/LogView.js";
+import ProductView from "./View/productView.js";
+import WalletModel from "./Model/walletModel.js";
+import ProductModel from "./Model/productModel.js";
 
 const productDiv = _.$(".section__products");
-const walletDiv = _.$(".wallet__coins");
+const walletDiv = _.$(".section__wallet");
+const controllerDiv = _.$(".section__controller");
 
-new WalletView(walletDiv);
+const walletModel = new WalletModel(coin);
+const productModel = new ProductModel(product);
 
-let itemList = [];
-
-product.forEach((p) => itemList.push(new Item(p.name, p.price, p.count)));
-
-new ListView(itemList, productDiv);
+new WalletView(walletModel, walletDiv);
+new LogView(walletModel, productModel, controllerDiv);
+new ProductView(walletModel, productModel, productDiv);
