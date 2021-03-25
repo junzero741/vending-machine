@@ -1,32 +1,33 @@
 import "../style/style.scss";
 import { createSectionWithClassname } from "./DOM.js";
 import { _ } from "./utils.js";
-import ProductView from "./ProductView.js";
-import ProcessView from "./ProcessView.js";
-import WalletView from "./WalletView.js";
-import Manager from "./Manager.js";
-
-// import Currency from "./Currency.js";
+import { VIEWS, NUMBERS } from "./variables.js";
+import ProductView from "./view/ProductView.js";
+import WalletView from "./view/WalletView.js";
+import ProcessView from "./view/ProcessView.js";
+import WalletModel from "./model/WalletModel.js";
+import ProductModel from "./model/ProductModel.js";
 
 const app = _.$("#app");
-const views = ["productView", "conductionView", "walletView"];
 
 function init() {
-  // await setDom();
-  views.forEach((e) => createSectionWithClassname(app, e));
-  const manager = new Manager();
-  const productView = new ProductView(_.$(`.${views[0]}`), manager);
-  const processView = new ProcessView(_.$(`.${views[1]}`), manager);
-  const walletView = new WalletView(_.$(`.${views[2]}`), manager);
-  manager.setView(productView, processView, walletView);
-  productView.init();
-  processView.init();
-  walletView.init();
+  const timer = {
+    count: 0,
+  };
+
+  Object.values(VIEWS).forEach((e) => createSectionWithClassname(app, e));
+  const walletModel = new WalletModel(timer);
+  const productModel = new ProductModel();
+  new WalletView(walletModel, _.$(`.${VIEWS.WALLET}`));
+  new ProductView(walletModel, productModel, _.$(`.${VIEWS.PRODUCT}`));
+  new ProcessView(walletModel, productModel, _.$(`.${VIEWS.PROCESS}`));
+  setInterval(() => {
+    timer.count++;
+    if (timer.count >= NUMBERS.TERM) {
+      walletModel.returnBalance();
+      timer.count = 0;
+    }
+  }, NUMBERS.INITMS);
 }
-
-// async function setDom() {
-// addEventListener, dom 다 하기
-
-// }
 
 init();
