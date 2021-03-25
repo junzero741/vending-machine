@@ -1,61 +1,67 @@
-import { _ } from "./util.js";
-import  Observable  from "./observable.js";
+
+import { _ } from './util.js';
+import Observable from './observable.js';
 
 export class VendingModel extends Observable {
-	constructor(data, walletModel) {
-		super();
-		this.wallet = walletModel;
-		this.list = data.productInfo;
-		this.account = 0;
-		this.init();
-	}
+  constructor(data, walletModel) {
+    super();
+    this.wallet = walletModel;
+    this.itemList = data.productInfo;
+    this.account = 0;
+    this.timer;
+  }
 
-	init() {}
+  inputMoney(money) {
+    this.account += money;
+    this.changeMoneyEvent();
+    this.notify({
+      type: 'inputMoney',
+      value: money,
+    });
+  }
 
-	inputMoney(money) {
-		this.account += money;
-		this.changeMoneyEvent();
-		this.notify({
-			type: "inputMoney",
-			value: money,
-		});
-	}
+  getPurchasableList(money) {
+    return this.itemList.filter((e) => e.price <= money && e.stock > 0);
+  }
 
-	getPurchasableList(money) {
-		return this.list.filter((e) => e.price <= money && e.stock > 0);
-	}
+  changeMoneyEvent() {
+    this.notify({
+      type: 'purchasableList',
+      value: this.getPurchasableList(this.account),
+    });
+    this.notify({
+      type: 'accountChange',
+      value: this.account,
+    });
+    this.resetTimer();
+  }
 
-	changeMoneyEvent() {
-		this.notify({
-			type: "purchasableList",
-			value: this.getPurchasableList(this.account),
-		});
-		this.notify({
-			type: "accountChange",
-			value: this.account,
-		});
-	}
+  resetTimer() {
+    clearTimeout(this.timer);
+    this.timer = setTimeout(this.returnMoney.bind(this), 5000);
+  }
 
-	returnMoney() {
-		this.wallet.addAmount(this.account);
-		this.notify({
-			type: "returnMoney",
-			value: this.account,
-		});
-		this.account = 0;
-		this.changeMoneyEvent();
-	}
+  returnMoney() {
+    if (this.account === 0) return;
+    this.wallet.addAccount(this.account);
+    this.notify({
+      type: 'returnMoney',
+      value: this.account,
+    });
+    this.account = 0;
+    this.changeMoneyEvent();
+  }
 
-	sell(itemName) {
-		const targetItem = this.list.find(({ name }) => name === itemName);
-		if (targetItem.stock > 0) {
-			targetItem.stock--;
-			this.account -= targetItem.price;
-			this.changeMoneyEvent(-targetItem.price);
-			this.notify({
-				type: "sell",
-				value: itemName,
-			});
-		}
-	}
+  sell(itemName) {
+    const targetItem = this.itemList.find(({ name }) => name === itemName);
+    if (targetItem.stock === 0) return;
+    targetItem.stock--;
+    this.account -= targetItem.price;
+    this.changeMoneyEvent();
+    this.notify({
+      type: 'sell',
+      value: itemName,
+    });
+  }
+
 }

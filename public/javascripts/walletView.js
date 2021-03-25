@@ -1,85 +1,79 @@
-import WalletModel from "./walletModel.js";
+import WalletModel from './walletModel.js';
+import { _ } from './util.js';
 
 export class WalletView {
-	constructor(selectors, vendingModel, walletModel) {
-		this.$ = selectors;
-		this.walletModel = walletModel
+  constructor(selectors, vendingModel, walletModel) {
+    this.$ = selectors;
+    this.walletModel = walletModel;
     this.vendingModel = vendingModel;
-		this.init();
-	}
+    this.init();
+  }
 
-	init() {
-		this.render();
-		this.controllEventListener();
-		this.walletModel.subscribe(this.setValueOnCurrencyUnit);
-		this.walletModel.subscribe(this.setValueOnTotalAmount);
-	}
+  init() {
+    this.render();
+    this.addEvent();
+    this.walletModel.subscribe(this.updateWallet.bind(this));
+  }
 
-	render() {
-		const makeWalletHTML = () => {
-			const currencyUnits = [10, 50, 100, 500, 1000, 5000, 10000];
-			const walletInnerHTML = (unit) => {
-				return `<li class="currency-unit__${unit}">
-                   <div>${unit}<span>원</span></div>
-                   <div class="currency-unit__count">0<span>개</span></div>
-                </li>`;
-			};
-			return `<ul class="wallet__currency-unit"> 
-                ${template(currencyUnits, walletInnerHTML)} 
+  render() {
+    this.$.$wallet.innerHTML = this.makeWalletHTML();
+  }
+
+  addEvent() {
+    const $currencyUnits = _.$('.wallet__currency-unit');
+    const $walletInput = _.$('.wallet__total input');
+    _.on($currencyUnits, 'click', this.clickMoney.bind(this));
+    _.on($walletInput, 'keyup', _.debounce(this.inputMoney.bind(this), 1000));
+  }
+
+  makeWalletHTML() {
+    const currencyUnits = [10, 50, 100, 500, 1000, 5000, 10000];
+    return `<ul class="wallet__currency-unit"> 
+                ${this.makeUnitHTML(currencyUnits)} 
               </ul>
               <ul>
                 <li class="wallet__total"><input type="text"><span>원</span></li>
               </ul>`;
-		};
+  }
 
-		const template = (data, innerHTML) => {
-			const html = data.map((unit) => innerHTML(unit)).join(" ");
-			return html;
-		};
+  makeUnitHTML(unitList) {
+    const template = (acc, unit) =>
+      acc +
+      `<li class="currency-unit__${unit}">
+        <div>${unit}<span>원</span></div>
+        <div class="currency-unit__count">0<span>개</span></div>
+      </li>`;
+    return unitList.reduce(template, '');
+  }
 
-		const html = makeWalletHTML();
-		this.$.$wallet.innerHTML = html;
-	}
+  updateWallet({ currencyUnits, account }) {
+    this.updateUnit(currencyUnits);
+    this.updateAccount(account);
+  }
 
-	setValueOnCurrencyUnit(data) {
-		const currencyUnits = data.individualCurrencyUnit;
+  updateUnit(units) {
+    units.forEach(
+      (v) =>
+        (_.$(
+          `.currency-unit__${v.currencyUnit} .currency-unit__count`
+        ).innerHTML = `${v.count}개`)
+    );
+  }
 
-		currencyUnits.map((v) => {
-			const $unitCount = document.querySelector(`.currency-unit__${v.currencyUnit} .currency-unit__count`);
-			$unitCount.innerHTML = `${v.count}개`;
-		});
-	}
+  updateAccount(account) {
+    _.$('.wallet__total input').value = account;
+  }
 
-	setValueOnTotalAmount(data) {
-		const totalAmount = data.totalAmount;
-		const $walletInput = document.querySelector(".wallet__total input");
+  clickMoney({ target }) {
+    const unit = parseInt(
+      target.parentNode.className.replace('currency-unit__', '')
+    );
+    this.walletModel.deductAccount(unit);
+    this.vendingModel.inputMoney(unit);
+  }
 
-		$walletInput.value = totalAmount;
-	}
+  inputMoney() {
+    this.walletModel.setAccount(_.$('.wallet__total input').value);
+  }
 
-	controllEventListener() {
-		const $currencyUnits = document.querySelector(".wallet__currency-unit");
-		const $walletInput = document.querySelector(".wallet__total input");
-		$currencyUnits.addEventListener("click", ({ target }) => {
-			const unit = parseInt(target.parentNode.className.replace("currency-unit__", ""));
-			this.walletModel.deductAmount(unit);
-			this.vendingModel.inputMoney(unit);
-		});
-		this.debounce(
-			$walletInput,
-			"keyup",
-			(e) => {
-				this.walletModel.changeToCurrencyUnit(e);
-			},
-			1000
-		);
-	}
-
-	debounce(target, event, fn, delay) {
-		let debounceTimeoutId;
-		target.addEventListener(event, (e) => {
-			clearTimeout(debounceTimeoutId);
-			debounceTimeoutId = setTimeout(fn.bind(this, e), delay);
-		});
-	}
 }
