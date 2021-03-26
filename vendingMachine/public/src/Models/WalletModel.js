@@ -1,47 +1,54 @@
-class WalletModel {
-  moneyObject = {
-    KRW10: 0,
-    KRW50: 0,
-    KRW100: 0,
-    KRW500: 0,
-    KRW1000: 0,
-    KRW5000: 0,
-    KRW10000: 0
-  };
+import Observable from '../Observable/Observable.js';
+
+class WalletModel extends Observable {
+  wallet = new Map([
+    [10000, 0],
+    [5000, 0],
+    [1000, 0],
+    [500, 0],
+    [100, 0],
+    [50, 0],
+    [10, 0],
+  ]);
+
   constructor(money) {
-    this.money = money;
+    super();
     this.init(money);
   }
 
   init(money) {
-    this.makeObject(money);
+    this.updateWallet(money);
   }
 
-  makeObject(money) {
+  updateWallet(money) {
     let currentMoney = money;
-    let twoOrFiveFlag = true;
-    let moneyKind = 10000;
-    while (currentMoney) {
-      if (currentMoney < 10) return;
+    for (let moneyKind of this.wallet.keys()) {
       const count = Math.floor(currentMoney / moneyKind);
-      this.moneyObject[`KRW${moneyKind}`] = count;
+      this.wallet.set(moneyKind, count);
       currentMoney -= count * moneyKind;
-      moneyKind = twoOrFiveFlag ? moneyKind / 2 : moneyKind / 5;
-      twoOrFiveFlag = !twoOrFiveFlag;
     }
   }
 
   useMoney(moneyKind) {
-    this.moneyObject[`KRW${moneyKind}`]--;
+    let count = this.wallet.get(moneyKind);
+    this.wallet.set(moneyKind, --count);
     this.money -= moneyKind;
   }
 
-  getMoneyObject() {
-    return { ...this.moneyObject };
+  addMoney(money) {
+    const currentMoney = money + this.getTotalMoney();
+    this.updateWallet(currentMoney);
   }
 
-  getMoney() {
-    return this.money;
+  getWallet() {
+    return Array.from(this.wallet.entries()); // moneyObject가 Map이라 가정
+  }
+
+  getTotalMoney() {
+    const totalMoney = this.getWallet().reduce((acc, [moneyKind, count]) => {
+      return acc + (moneyKind * count);
+    }, 0);
+    return totalMoney;
   }
 }
 
