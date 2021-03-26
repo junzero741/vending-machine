@@ -1,89 +1,43 @@
 const randomNumber = () => {
   return Math.floor(Math.random() * 10);
 };
-const moneyList = () => {
-  const moneyType = [
-    '10',
-    '50',
-    '100',
-    '500',
-    '1000',
-    '5000',
-    '10000',
-  ];
-  const money = moneyType.map((v) => {
-    return { title: v, count: randomNumber() };
+const getWallet = () => {
+  const moneyType = ['10', '50', '100', '500', '1000', '5000', '10000'];
+  const wallet = moneyType.map((type) => {
+    return { name: type, count: randomNumber() };
   });
-  return money;
+  return wallet;
 };
 
-const menuList = () => {
-  let menuTitle = [
-    '콜라',
-    '사이다',
-    '젤리',
-    '포도환타',
-    '레몬주스',
-    '봉봉',
-    '코코아칩',
-    '제로콜라',
-    '커피',
-    '초코우유',
-    '게토레이',
-    '초콜릿',
-    '딸바주스',
-    '바나나칩',
-    '커피우유',
-    '알로에',
-    '콘칩',
-    '새우깡',
-    '감자칩',
-    '칸쵸',
-  ];
-  let menuPrice = [
-    '500원',
-    '1000원',
-    '400원',
-    '300원',
-    '900원',
-    '1200원',
-    '1000원',
-    '1000원',
-    '2000원',
-    '1000원',
-    '7000원',
-    '600원',
-    '1000원',
-    '500원',
-    '1000원',
-    '1200원',
-    '1000원',
-    '1000원',
-    '2000원',
-    '1000원',
+const getMenuList = () => {
+  const menuTitle = [
+    ['콜라', 500],
+    ['사이다', 1000],
+    ['젤리', 400],
+    ['포도환타', 300],
+    ['레몬주스', 900],
+    ['봉봉', 1200],
+    ['코코아칩', 1000],
+    ['제로콜라', 1000],
+    ['커피', 2000],
+    ['초코우유', 1000],
+    ['게토레이', 7000],
+    ['초콜릿', 600],
+    ['딸바주스', 1000],
+    ['바나나칩', 500],
+    ['커피우유', 1000],
+    ['알로에', 1200],
+    ['콘칩', 1000],
+    ['새우깡', 1000],
+    ['감자칩', 2000],
+    ['칸쵸', 1000],
   ];
 
-  let menu = menuTitle.map(
-    (v, i) => (v = { title: v, price: menuPrice[i], count: randomNumber() })
-  );
-
-  return menu;
-};
-
-const sumMoney = () => {
-  const moneyType = [
-    '10원',
-    '50원',
-    '100원',
-    '500원',
-    '1000원',
-    '5000원',
-    '10000원',
-  ];
-  const money = moneyType.map((v) => {
-    return { title: v, count: randomNumber() };
+  const menuList = menuTitle.map(([name, price]) => {
+    return { name, price, count: randomNumber() };
   });
-  return money;
+
+  return menuList;
 };
 
-export { menuList, sumMoney, moneyList };
+export { getMenuList, getWallet };

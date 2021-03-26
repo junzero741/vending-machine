@@ -2,24 +2,27 @@ import Component from '../../core/Component.js';
 import Product from './Product.js';
 
 export default class ProductView extends Component {
-  selectPropsToUse() {
-    // this.props의 값으로 menulist가 넘어온다. Component.js에서 내부동작.
-    const { menulist } = this.props;
-    this.selfProps = { menulist };
-  }
   getTemplate() {
     return `
      <ul class="menu_line"></ul>
     `;
   }
   mountComponents() {
-    const { menulist } = this.selfProps;
-    menulist.forEach((el) => {
+    const { menuList } = this.props;
+    menuList.forEach((el, index) => {
       this.createComponent(Product, '.menu_line', () => {
-        const { title, price, count } = el;
-        return { title, price, count };
+        const { menuList } = this.props;
+        const { name, price, count } = menuList[index];
+        const { inputedMoney } = this.props;
+        return { inputedMoney, name, price, count };
       });
     });
   }
-  setEventLinstener() {}
+  setEventLinstener() {
+    const { selectBeverage } = this.props;
+    this.addEventLinstener('click', '.menu_box', ({ target }) => {
+      const name = target.innerText;
+      selectBeverage(name);
+    });
+  }
 }
