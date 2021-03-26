@@ -1,19 +1,38 @@
 import { _ } from "../util.js";
 import Observable from "../Observable.js";
+import { data } from "../data.js";
 
 export default class WalletModel extends Observable {
-  constructor($walletViewCoin, $walletViewCoinBundle) {
+  constructor() {
     super();
-    this.$walletViewCoin = $walletViewCoin;
-    this.$coinBundle = $walletViewCoinBundle;
-    this.init();
-  }
-  updateMoney(event) {
-    console.log(event.target.value);
-    const currentCoin = event.target.value;
-    const stateView = new StateView();
-    stateView.drawUpdateTotalCoin(currentCoin);
+    this.moneyState = data["money"];
   }
 
-  init() {}
+  updateMoney(moneyType) {
+    this.moneyState.forEach(money => {
+      if (money["name"] === moneyType && money["count"]) money["count"]--;
+    });
+    this.notify(moneyType);
+  }
+
+  getMoneyState() {
+    return this.moneyState;
+  }
+
+  getMoneyCount(moneyType) {
+    let count;
+
+    this.moneyState.forEach(money => {
+      if (money["name"] === moneyType && money["count"] >= 0) {
+        count = money["count"];
+      }
+    });
+    return count;
+  }
+
+  calculateTotalMoney() {
+    return this.moneyState.reduce((acc, money) => {
+      return acc + money["name"] * money["count"];
+    }, 0);
+  }
 }
