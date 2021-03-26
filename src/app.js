@@ -11,12 +11,20 @@ window.addEventListener('DOMContentLoaded', async () => {
   `;
 
   mainView.walletView.addEvent();
-  mainView.walletView.wallet.toggleDisableButton();
+  mainView.operationView.addEvent();
+  mainView.productView.addEvent();
+  mainView.walletView.toggleDisableButton();
 
   const orderButtonList = $$(`.order--button`);
   orderButtonList.forEach((el) => {
     if (isEmpty(el.dataset.count)) {
       changeSoldOutColor(el);
+    }
+  });
+  orderButtonList.forEach((el) => {
+    if (+el.dataset.price === 0) {
+      el.classList.add('order--button--possible');
+      el.disabled = false;
     }
   });
 });

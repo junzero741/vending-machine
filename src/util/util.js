@@ -23,5 +23,6 @@ const updateInputData = (className, data) => {
 
 const isEmpty = (data) => +data === 0;
 const changeSoldOutColor = (element) => (element.disabled = true);
+const replaceClassName = (currentClassName, newClassName) => $(`.${currentClassName}`).classList.replace(currentClassName, newClassName);
 
-export { $, $$, createRandomNumber, moneyComma, updateInputData, isEmpty, changeSoldOutColor };
+export { $, $$, createRandomNumber, moneyComma, updateInputData, isEmpty, changeSoldOutColor, replaceClassName };

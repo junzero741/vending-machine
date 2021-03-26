@@ -1,13 +1,30 @@
 import { _ } from '../../util/const';
 import { $, moneyComma } from '../../util/util';
-import OperationModel from '../models/operationModel';
+import { walletButtonObservers, returnButtonObservers } from '../observer/observer';
 import WalletModel from '../models/walletModel';
 
-export default class WalletView {
+export default class WalletView extends WalletModel {
   constructor() {
+    super();
     this.title = _.walletTitle;
-    this.wallet = new WalletModel();
-    this.display = new OperationModel();
+    this.subscribeInsertMoney();
+    this.subscribeReturnMoneyData();
+  }
+
+  subscribeInsertMoney() {
+    walletButtonObservers.subscribe(this.minusMoney.bind(this));
+    walletButtonObservers.subscribe(this.getExtraMoney.bind(this));
+    walletButtonObservers.subscribe(this.updateWalletData.bind(this));
+    walletButtonObservers.subscribe(this.updateWalletMoney.bind(this));
+    walletButtonObservers.subscribe(this.toggleDisableButton.bind(this));
+  }
+
+  subscribeReturnMoneyData() {
+    returnButtonObservers.subscribe(this.plusMoney.bind(this));
+    returnButtonObservers.subscribe(this.getReturnExtraMoney.bind(this));
+    returnButtonObservers.subscribe(this.updateWalletData.bind(this));
+    returnButtonObservers.subscribe(this.updateWalletMoney.bind(this));
+    returnButtonObservers.subscribe(this.toggleDisableButton.bind(this));
   }
 
   render() {
@@ -20,11 +37,15 @@ export default class WalletView {
 
   addEvent() {
     this.clickUnitMoneyButton();
+    this.clickReturnButton();
   }
 
   clickUnitMoneyButton() {
-    $('.wallet--button__container').addEventListener('click', (e) => this.wallet.fire(e.target.id));
-    $('.wallet--button__container').addEventListener('click', (e) => this.display.fire(e.target.id));
+    $('.wallet--button__container').addEventListener('click', (e) => walletButtonObservers.fire(e.target.id));
+  }
+
+  clickReturnButton() {
+    $(`.extra--money__button`).addEventListener('click', () => returnButtonObservers.fire());
   }
 
   renderTitle() {
@@ -39,7 +60,9 @@ export default class WalletView {
     return `
     <form class="navbar-form wallet--money__form" role="search">
       <div class="form-group form-group-div">
-        <input type="text" class="form-control wallet--money__input" placeholder="${_.money}" value="${moneyComma(this.wallet.walletMoney)} ${_.money}">
+        <input type="text" class="form-control wallet--money__input" placeholder="${_.money}" value="${moneyComma(
+      this.wallet.walletMoney
+    )} ${_.money}">
       </div>
     </form>
       `;

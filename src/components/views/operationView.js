@@ -1,9 +1,34 @@
 import { _ } from '../../util/const';
+import { $ } from '../../util/util';
 import OperationModel from '../models/operationModel';
+import { returnButtonObservers, walletButtonObservers } from '../observer/observer';
 
-export default class OperationView {
+export default class OperationView extends OperationModel {
   constructor() {
-    this.display = new OperationModel();
+    super();
+    this.subscribeDisplayMoney();
+    this.subscribeReturnMoney();
+  }
+
+  subscribeDisplayMoney() {
+    walletButtonObservers.subscribe(this.plusDisplayMoney.bind(this));
+    walletButtonObservers.subscribe(this.updateDisplayMoney.bind(this));
+    walletButtonObservers.subscribe(this.changeStatePossible.bind(this));
+  }
+
+  subscribeReturnMoney() {
+    returnButtonObservers.subscribe(this.updateDisplayMoney.bind(this));
+    returnButtonObservers.subscribe(this.changeStateImpossible.bind(this));
+  }
+
+  addEvent() {
+    this.clickReturnButton();
+  }
+
+  clickReturnButton() {
+    $(`.extra--money__button`).addEventListener('click', () => {
+      returnButtonObservers.fire(this.calculateReturnMoney());
+    });
   }
 
   render() {
@@ -20,7 +45,7 @@ export default class OperationView {
     return `
     <form class="navbar-form insert--money__form" role="search">
       <div class="form-group form-group-div">
-        <input type="text" class="form-control insert--money__input" placeholder="${_.money}" value="${this.display.insertMoney} ${_.money}">
+        <input type="text" class="form-control insert--money__input" placeholder="${_.money}" value="${this.insertMoney} ${_.money}">
       </div>
     </form>
       `;
@@ -38,7 +63,7 @@ export default class OperationView {
     return `
     <form class="navbar-form insert--money__form" role="search">
       <div class="form-group form-group-div">
-        <input type="text" class="form-control operating--window" placeholder="${_.info}" value="${this.display.message}">
+        <input type="text" class="form-control operating--window" placeholder="${_.info}" value="${this.message}">
       </div>
     </form>
     `;

@@ -1,23 +1,12 @@
-import Observer from '../observer/observer';
-import { createWalletData } from '../getData/createWalletData';
 import { _ } from '../../util/const';
 import { $$, updateInputData } from '../../util/util';
+import { createWalletData } from '../getData/createWalletData';
 
-export default class WalletModel extends Observer {
+export default class WalletModel {
   constructor() {
-    super();
     this.wallet = createWalletData();
     this.walletData = this.wallet.walletData;
     this.walletMoney = this.wallet.walletMoney;
-    this.subscribeInsertMoney();
-  }
-
-  subscribeInsertMoney() {
-    this.subscribe(this.minusMoney.bind(this));
-    this.subscribe(this.getExtraMoney.bind(this));
-    this.subscribe(this.updateWalletData.bind(this));
-    this.subscribe(this.updateWalletMoney.bind(this));
-    this.subscribe(this.toggleDisableButton.bind(this));
   }
 
   updateWalletData() {
@@ -39,9 +28,21 @@ export default class WalletModel extends Observer {
     }
   }
 
-  plusMoney() {
-    // 반환되는 잔돈을 unit별로 나눠서 더해주고
-    // 지갑 잔돈을 구해주기
+  plusMoney(data) {
+    if (data === undefined) return;
+    for (const key in this.walletData) {
+      if (this.walletData[key].unit === data[key].unit) {
+        this.walletData[key].count += data[key].count;
+      }
+    }
+  }
+
+  getReturnExtraMoney() {
+    this.walletMoney = this.walletData.reduce((acc, cur) => {
+      const units = cur.unit * cur.count;
+      acc += units;
+      return acc;
+    }, 0);
   }
 
   getExtraMoney(unit) {
@@ -57,12 +58,19 @@ export default class WalletModel extends Observer {
     walletButtonContainer.forEach((el, idx) => {
       if (this.checkUnitMoneyCount(idx)) {
         el.querySelector('.wallet--button').disabled = true;
-        this.toggleColorDiasbleButton(el, `wallet--count`, `wallet--count--disabled`);
+        this.addColorDiasbleButton(el, `wallet--count`, `wallet--count--disabled`);
+      } else {
+        el.querySelector('.wallet--button').disabled = false;
+        this.removeColorDiasbleButton(el, `wallet--count`, `wallet--count--disabled`);
       }
     });
   }
 
-  toggleColorDiasbleButton(element, className, addClassName) {
+  removeColorDiasbleButton(element, className, removeClassName) {
+    element.querySelector(`.${className}`).classList.remove(removeClassName);
+  }
+
+  addColorDiasbleButton(element, className, addClassName) {
     element.querySelector(`.${className}`).classList.add(addClassName);
   }
 }

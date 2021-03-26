@@ -1,4 +1,4 @@
-export default class Observer {
+class Observer {
   constructor() {
     this.observers = [];
   }
@@ -17,3 +17,9 @@ export default class Observer {
     this.observers.forEach((fn) => fn(data));
   }
 }
+
+const walletButtonObservers = new Observer();
+const returnButtonObservers = new Observer();
+const productButtonObservers = new Observer();
+
+export { walletButtonObservers, returnButtonObservers, productButtonObservers };

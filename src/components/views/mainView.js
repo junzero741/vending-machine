@@ -1,11 +1,10 @@
 import OperationView from './operationView';
-
-import OrderView from './orderView';
+import ProductView from './productView';
 import WalletView from './walletView';
 
 export default class MainView {
   constructor() {
-    this.orderView = new OrderView();
+    this.productView = new ProductView();
     this.operationView = new OperationView();
     this.walletView = new WalletView();
   }
@@ -17,7 +16,7 @@ export default class MainView {
     return `
     <div class="body__container">
       <div class="vending-machine">
-        ${await this.orderView.render()}
+        ${await this.productView.render()}
         ${this.operationView.render()}
       </div>
       <div class="raccoon-wallet">

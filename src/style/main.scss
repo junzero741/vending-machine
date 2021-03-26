@@ -87,6 +87,11 @@ body {
     width: $defaultButtonWidth;
     height: $defaultButtonHeight;
     border-radius: 7px;
+    background: #fff;
+
+    &:focus {
+      outline: none;
+    }
 
     &:disabled {
       background: #ff6347;
@@ -174,9 +179,20 @@ body {
     border-radius: $defaultBorderRadius;
     margin-right: 10px;
     font-weight: 600;
+    background: #fff;
+
+    &:focus {
+      border: none;
+      outline: none;
+    }
+
+    &:hover {
+      background: rgb(245, 255, 153);
+      transition: 0.2s;
+    }
 
     &:active {
-      background: #222;
+      background: rgb(243, 255, 137);
       transition: 0.2s;
     }
   }
