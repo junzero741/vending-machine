@@ -18,14 +18,16 @@ export default class WalletView {
   // subscribe walletView setView
   setView({ target, balance }) {
     if (!target) return;
-    this.currencyHtmls[target.index].lastElementChild.innerText = `${target.count}개`;
+    this.currencyHtmls[target.getIndex()].classList.remove("disable");
+    if (target.getCount() === 0) this.currencyHtmls[target.getIndex()].classList.add("disable");
+    this.currencyHtmls[target.getIndex()].lastElementChild.innerText = `${target.getCount()}개`;
     this.walletBalanceHtml.firstElementChild.innerText = `${balance}`;
   }
 
   setInitialView() {
     const template = (unit, count) => {
       return /*html*/ `
-        <li class="currency">
+        <li class="currency ${count === 0 ? "disable" : ""}">
           <div class="currency__unit" data-value="${unit}">${unit}원</div>
           <div class="currency__count" >${count}개</div>
         </li>
@@ -34,12 +36,12 @@ export default class WalletView {
     const templateBottom = () => {
       return /*html*/ `
         <li class="balance">
-          <p>${this.walletModel.balance}</p>
+          <p>${this.walletModel.getBalance()}</p>
           <span>원</span>
         </li>
         `;
     };
-    this.view.innerHTML = this.walletModel.currencies.reduce((acc, val) => acc + template(val.value, val.count), `<ul class="currencies">`) + templateBottom() + `</ul>`;
+    this.view.innerHTML = this.walletModel.getCurrencies().reduce((acc, val) => acc + template(val.getValue(), val.getCount()), `<ul class="currencies">`) + templateBottom() + `</ul>`;
     this.currencyHtmls = _.$$(".currency", this.view);
     this.walletBalanceHtml = _.$(".balance", this.view);
   }
@@ -48,10 +50,10 @@ export default class WalletView {
     this.view.addEventListener("click", (e) => {
       const { target } = e;
       if (!target.classList.contains("currency__unit")) return;
-      const sameCurrency = this.walletModel.currencies.find((curr) => curr.value === Number(target.dataset.value));
-      if (!sameCurrency || sameCurrency.count === 0) return;
+      const sameCurrency = this.walletModel.getCurrencies().find((curr) => curr.getValue() === Number(target.dataset.value));
+      if (!sameCurrency || sameCurrency.getCount() === 0) return;
       this.walletModel.updateCurrency(sameCurrency, -1);
-      this.walletModel.updateInsertedBalance(sameCurrency.value);
+      this.walletModel.updateInsertedBalance(sameCurrency.getValue());
     });
   }
 }

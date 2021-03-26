@@ -12,11 +12,27 @@ export default class WalletModel extends Observable {
     this.timer = timer;
     this.init();
   }
-  
+
   init() {
     this.balance = getRandom(NUMBERS.DEFAULTVALUE);
     this.setInitialCurrencies();
     this.distributeCurrency(this.balance);
+  }
+
+  getTimer() {
+    return this.timer;
+  }
+
+  getInsertedBalance() {
+    return this.insertedBalance;
+  }
+
+  getCurrencies() {
+    return this.currencies;
+  }
+
+  getBalance() {
+    return this.balance;
   }
 
   setInitialCurrencies() {
@@ -28,8 +44,8 @@ export default class WalletModel extends Observable {
     while (balance > 0) {
       const randomCount = parseInt(Math.random() * this.currencies.length);
       const target = this.currencies[randomCount];
-      if (target.value > balance) continue;
-      balance -= target.value;
+      if (target.getValue() > balance) continue;
+      balance -= target.getValue();
       target.setCount(+1);
     }
   }
@@ -37,9 +53,9 @@ export default class WalletModel extends Observable {
   // 반환 후 합산된 지갑 총액 기준으로 큰 화폐 단위 우선 분배 - 화폐 개수 갱신
   updateCurrencies(balance) {
     this.currencies.reduceRight((arr, cur) => {
-      const currencyCount = parseInt(balance / cur.value);
+      const currencyCount = parseInt(balance / cur.getValue());
       if (currencyCount) {
-        balance -= cur.value * currencyCount;
+        balance -= cur.getValue() * currencyCount;
         this.updateCurrency(cur, currencyCount);
       }
     }, 0);
@@ -50,7 +66,7 @@ export default class WalletModel extends Observable {
   //        walletView setView
   updateCurrency(target, count) {
     target.setCount(count);
-    this.updateBalance(target.value * count);
+    this.updateBalance(target.getValue() * count);
     this.notify({ target, ...this });
   }
 
@@ -60,13 +76,15 @@ export default class WalletModel extends Observable {
   }
 
   // notify processView setViewAboutWallet
-  updateInsertedBalance(value, type = '') {
-    if(type !== 'buy') type = this.insertedBalance + value ? 'insert' : 'return';
-    this.timer.count = 0;
+  updateInsertedBalance(value, type = "") {
+    if (type !== "buy") type = this.insertedBalance + value ? "insert" : "return";
+    this.timer.setCount(0);
+    this.timer.setTextIntoTimerHtml(this.timer.getCount());
+    this.timer.toggleClassOfTimerHtml("remove", "hidden");
     this.insertedBalance += value;
-    this.notify({ flag: true, ...this, type, insertedCurrency : value });
+    this.notify({ flag: true, ...this, type, insertedCurrency: value });
   }
-  
+
   returnBalance() {
     if (!this.insertedBalance) return;
     this.updateCurrencies(this.insertedBalance);

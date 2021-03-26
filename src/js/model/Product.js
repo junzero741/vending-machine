@@ -6,6 +6,25 @@ export default class Product {
     this.status = false;
     this.index = index;
   }
+  getIndex() {
+    return this.index;
+  }
+
+  getPrice() {
+    return this.price;
+  }
+
+  getStatus() {
+    return this.status;
+  }
+
+  getCount() {
+    return this.count;
+  }
+
+  getName() {
+    return this.name;
+  }
 
   isEmpty() {
     return this.count === 0;
@@ -18,5 +37,4 @@ export default class Product {
   setCount(count) {
     this.count += count;
   }
-
 }

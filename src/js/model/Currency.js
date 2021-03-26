@@ -5,6 +5,18 @@ export default class Currency {
     this.index = index;
   }
 
+  getValue() {
+    return this.value;
+  }
+
+  getCount() {
+    return this.count;
+  }
+
+  getIndex() {
+    return this.index;
+  }
+
   isEmpty() {
     return this.count === 0;
   }
